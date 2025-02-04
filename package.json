@@ -3,13 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/app.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon --watch src src/app.js"
+    "dev": "nodemon --watch src src/app.js",
+    "start": "pm2 start ecosystem.config.cjs"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2"
+    "@aws-sdk/client-s3": "^3.741.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0",
+    "pm2": "^5.4.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

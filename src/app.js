@@ -1,10 +1,13 @@
-// console.log('Hello, AWS!');
+import express from 'express';
+import morgan from 'morgan';
+import { uploadFile } from './s3.js';
 
-const express = require('express');
 const app = express();
+const port = 8000;
+app.use(morgan("common"));
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000!!');
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
 
 app.get('/', (req, res) => {
@@ -14,3 +17,14 @@ app.get('/', (req, res) => {
 app.get('/hello', (req, res) => {
   res.send('Hello, Codeit!');
 });
+
+app.get('/upload', async (req, res) => {
+  try {
+    await uploadFile();
+    res.json({ message: '파일 업로드 성공!' });
+  } catch (error) {
+    res.status(500).json({ message: '파일 업로드 실패', error: error.message });
+  }
+});
+
+export default app;
