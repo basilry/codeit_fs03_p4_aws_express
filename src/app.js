@@ -10,3 +10,7 @@ app.listen(3000, () => {
 app.get('/', (req, res) => {
   res.send('Hello, AWS!');
 });
+
+app.get('/hello', (req, res) => {
+  res.send('Hello, Codeit!');
+});
