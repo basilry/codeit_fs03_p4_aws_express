@@ -1,6 +1,7 @@
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import fs from 'fs';
 import dotenv from 'dotenv';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 dotenv.config();
 
 const filePath = 'src/pepe.png'
@@ -36,5 +37,20 @@ const uploadFile = async () => {
   }
 };
 
+const getPresignedUrl = async (fileKey) => {
+  const command = new GetObjectCommand({
+    Bucket: bucketName,
+    Key: fileKey,
+  });
 
-export { s3, uploadFile };
+  try {
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 }); // 1시간 유효
+    return url;
+  } catch (err) {
+    console.error("❌ Error generating Pre-signed URL:", err.message || err);
+  }
+};
+
+
+
+export { s3, uploadFile, getPresignedUrl };
