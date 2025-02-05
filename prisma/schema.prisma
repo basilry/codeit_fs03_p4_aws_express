@@ -17,8 +17,9 @@ model Customer {
 model Product {
   id          Int     @id @default(autoincrement())
   name        String
-  price       Float
-  stock       Int
+  price       Int
+  stock       Int?
+  description String?
   customerId  Int?
   customer    Customer? @relation(fields: [customerId], references: [id])
   createdAt   DateTime @default(now())
